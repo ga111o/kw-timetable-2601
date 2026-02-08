@@ -295,8 +295,21 @@ export default function TimetableSearch() {
             ) : (
               <ul className="timetable-search__list">
                 {results.map((entry, index) => (
-                  <li key={`${entry.학정번호}-${index}`} className="timetable-search__item">
-                    <label className="timetable-search__cart-check">
+                  <li
+                    key={`${entry.학정번호}-${index}`}
+                    className="timetable-search__item"
+                    onClick={() => toggleCart(entry)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleCart(entry);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isInCart(entry)}
+                  >
+                    <label className="timetable-search__cart-check" onClick={(e) => e.stopPropagation()}>
                       <input
                         type="checkbox"
                         checked={isInCart(entry)}
@@ -400,8 +413,21 @@ export default function TimetableSearch() {
           ) : (
             <ul className="timetable-search__cart-list">
               {cart.map((entry, index) => (
-                <li key={`cart-${entry.학정번호}-${entry.분반}-${index}`} className="timetable-search__cart-item">
-                  <label className="timetable-search__cart-timetable-check">
+                <li
+                  key={`cart-${entry.학정번호}-${entry.분반}-${index}`}
+                  className="timetable-search__cart-item"
+                  onClick={() => toggleTimetable(entry)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleTimetable(entry);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={timetableChecked.has(entryKey(entry))}
+                >
+                  <label className="timetable-search__cart-timetable-check" onClick={(e) => e.stopPropagation()}>
                     <input
                       type="checkbox"
                       checked={timetableChecked.has(entryKey(entry))}
@@ -421,7 +447,10 @@ export default function TimetableSearch() {
                       <button
                         type="button"
                         className="timetable-search__cart-remove"
-                        onClick={() => removeFromCart(entry)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeFromCart(entry);
+                        }}
                         aria-label="듣고싶은 강의 목록에서 제거"
                       >
                         제거

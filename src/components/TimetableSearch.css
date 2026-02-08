@@ -259,6 +259,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   position: relative;
   padding-left: 2.75rem;
+  cursor: pointer;
 }
 
 .timetable-search__cart-check {
@@ -363,6 +364,7 @@
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
 }
 
 .timetable-search__cart-timetable-check {
