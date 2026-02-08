@@ -14,6 +14,7 @@ function useMediaQuery(query: string): boolean {
 }
 import type { TimetableEntry } from '../types/timetable';
 import timetableData from '../assets/timetable.json';
+import { parseLectureTime } from '../utils/parseLectureTime';
 import TimetableView from './TimetableView';
 import './TimetableSearch.css';
 
@@ -227,6 +228,24 @@ export default function TimetableSearch() {
   const entriesOnTimetable = useMemo(
     () => cart.filter((e) => timetableChecked.has(entryKey(e))),
     [cart, timetableChecked]
+  );
+
+  /** 시간표 그리드에 표시할 항목 (강의시간이 있고 파싱 가능한 것) */
+  const entriesWithTime = useMemo(
+    () =>
+      entriesOnTimetable.filter(
+        (e) => (e.강의시간 ?? '').trim() && parseLectureTime(e.강의시간).length > 0
+      ),
+    [entriesOnTimetable]
+  );
+
+  /** 시간이 없어 막대로만 표시할 항목 */
+  const entriesWithoutTime = useMemo(
+    () =>
+      entriesOnTimetable.filter(
+        (e) => !(e.강의시간 ?? '').trim() || parseLectureTime(e.강의시간).length === 0
+      ),
+    [entriesOnTimetable]
   );
 
   type MobileTab = 'search' | 'list' | 'timetable';
@@ -488,10 +507,22 @@ export default function TimetableSearch() {
           aria-hidden={isMobile ? mobileTab !== 'timetable' : undefined}
         >
         {entriesOnTimetable.length > 0 ? (
-          <TimetableView entries={entriesOnTimetable} />
+          <TimetableView entries={entriesWithTime} />
         ) : (
           <div className="timetable-search__timetable-placeholder">
             시간표에 표시할 강의를 목록에서 선택하세요.
+          </div>
+        )}
+        {entriesWithoutTime.length > 0 && (
+          <div className="timetable-search__no-time-section" aria-label="시간 미정 과목">
+            <ul className="timetable-search__no-time-list">
+              {entriesWithoutTime.map((entry, index) => (
+                <li key={entryKey(entry)} className="timetable-search__no-time-bar">
+                  <span className="timetable-search__no-time-title">{entry.과목명}</span>
+                  <span className="timetable-search__no-time-prof">{entry.담당교수 || '—'}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
         <div className="timetable-search__priority-row" aria-label="순위별 시간표 저장">

@@ -92,6 +92,52 @@
   padding: 2rem;
 }
 
+.timetable-search__no-time-section {
+  flex-shrink: 0;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timetable-search__no-time-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.timetable-search__no-time-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 2.5rem;
+  box-sizing: border-box;
+}
+
+.timetable-search__no-time-title {
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.9);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timetable-search__no-time-prof {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.55);
+  flex-shrink: 0;
+}
+
 .timetable-search__priority-row {
   flex-shrink: 0;
   display: flex;
@@ -547,6 +593,23 @@
   .timetable-search__timetable-placeholder,
   .timetable-search__cart-empty {
     color: rgba(0, 0, 0, 0.45);
+  }
+
+  .timetable-search__no-time-bar {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .timetable-search__no-time-title {
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .timetable-search__no-time-prof {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .timetable-search__no-time-section {
+    border-top-color: rgba(0, 0, 0, 0.1);
   }
 }
 
